@@ -14,33 +14,54 @@
         <Method name="register" returnType="void" visibility="public"/>
         <Method name="login" returnType="void" visibility="public"/>
         <Method name="logout" returnType="void" visibility="public"/>
-        <Method name="chooseLanguage" returnType="void" visibility="public">
+        <Method name="chooseLanguage" returnType="Language" visibility="public">
           <Argument type="Language" name="language"/>
         </Method>
         <Method name="viewAvailableSpaces" returnType="List&lt;SportsSpace&gt;" visibility="public"/>
-        <Method name="makeReservation" returnType="void" visibility="public">
+        <Method name="makeReservation" returnType="Reservation" visibility="public">
           <Argument type="Reservation" name="reservation"/>
         </Method>
-        <Method name="cancelReservation" returnType="void" visibility="public">
+        <Method name="cancelReservation" returnType="int" visibility="public">
           <Argument type="int" name="reservationId"/>
         </Method>
         <Method name="viewReservationHistory" returnType="List&lt;Reservation&gt;" visibility="public"/>
-        <Method name="shareReservationOnSocialMedia" returnType="void" visibility="public">
+        <Method name="shareReservationOnSocialMedia" returnType="Reservation" visibility="public">
           <Argument type="Reservation" name="reservation"/>
         </Method>
+        <Method name="selectTypeUser" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Reserve" package="" visibility="public" xPosition="1094.0" yPosition="370.0">
-      <Fields/>
+    <Class name="Reserve" package="" visibility="public" xPosition="982.0" yPosition="308.0">
+      <Fields>
+        <Field name="date" type="Date" visibility="private"/>
+        <Field name="user" type="User" visibility="private"/>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="startTime" type="Time" visibility="private"/>
+        <Field name="endTime" type="Time" visibility="private"/>
+        <Field name="status" type="ReservationStatus" visibility="private"/>
+      </Fields>
       <Constructors/>
-      <Methods/>
+      <Methods>
+        <Method name="confirm" returnType="void" visibility="public"/>
+        <Method name="cancel" returnType="void" visibility="public"/>
+        <Method name="getDetails" returnType="void" visibility="public"/>
+      </Methods>
     </Class>
-    <Class name="ReserveSystem" package="" visibility="public" xPosition="499.0" yPosition="132.0">
-      <Fields/>
+    <Class name="ReserveSystem" package="" visibility="private" xPosition="478.0" yPosition="158.0">
+      <Fields>
+        <Field name="file" type="File" visibility="private"/>
+        <Field name="reservations" type="int" visibility="private"/>
+        <Field name="reservations" type="List&lt;Reservations&gt;" visibility="private"/>
+      </Fields>
       <Constructors/>
-      <Methods/>
+      <Methods>
+        <Method name="saveReserves" returnType="Reservation" visibility="public">
+          <Argument type="Reservation" name="reservation"/>
+        </Method>
+        <Method name="loadReservations" returnType="List&lt;Reservations&gt;" visibility="public"/>
+      </Methods>
     </Class>
-    <Class name="SportsSpace" package="" visibility="public" xPosition="129.0" yPosition="637.0">
+    <Class name="SportsSpace" package="" visibility="public" xPosition="418.0" yPosition="425.0">
       <Fields>
         <Field name="id" type="int" visibility="private"/>
         <Field name="Name" type="String" visibility="private"/>
@@ -52,66 +73,90 @@
       </Fields>
       <Constructors/>
       <Methods>
-        <Method name="isAvailable" returnType="void" visibility="public">
+        <Method name="isAvailable" returnType="Time" visibility="public">
           <Argument type="Date" name="date"/>
           <Argument type="Time" name="startTime"/>
           <Argument type="Time" name="endTime"/>
         </Method>
-        <Method name="addRating" returnType="void" visibility="public">
+        <Method name="addRating" returnType="Rating" visibility="public">
           <Argument type="Rating" name="rating"/>
         </Method>
-        <Method name="addComment" returnType="void" visibility="public">
+        <Method name="addComment" returnType="Comment" visibility="public">
           <Argument type="Comment" name="comment"/>
         </Method>
         <Method name="getAverageRating" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Administrator" package="" visibility="public" xPosition="71.0" yPosition="426.0">
+    <Class name="Administrator" package="" visibility="public" xPosition="81.0" yPosition="514.0">
       <Fields>
         <Field name="isSupervisor" type="boolean" visibility="private"/>
+        <Field name="password" type="String" visibility="private"/>
       </Fields>
       <Constructors/>
       <Methods>
-        <Method name="addSportsSpace" returnType="void" visibility="public">
+        <Method name="addSportsSpace" returnType="SportsSpace" visibility="public">
           <Argument type="SportsSpace" name="space"/>
         </Method>
-        <Method name="modifySportsSpace" returnType="void" visibility="public">
+        <Method name="modifySportsSpace" returnType="SportsSpace" visibility="public">
           <Argument type="SportsSpace" name="space"/>
         </Method>
-        <Method name="removeSportsSpace" returnType="void" visibility="public">
+        <Method name="removeSportsSpace" returnType="int" visibility="public">
           <Argument type="int" name="spaceID"/>
         </Method>
         <Method name="viewAllReservationHistory" returnType="List&lt;Reservation&gt;" visibility="public"/>
+        <Method name="editReserves" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="ReservationHistory" package="" visibility="public" xPosition="1031.0" yPosition="619.0">
-      <Fields/>
+    <Class name="ReserveList" package="" visibility="public" xPosition="982.0" yPosition="609.0">
+      <Fields>
+        <Field name="reservationsOccupied" type="int" visibility="private"/>
+        <Field name="reservationsAvailable" type="int" visibility="private"/>
+      </Fields>
       <Constructors/>
       <Methods/>
     </Class>
-    <Class name="Language" package="" visibility="public" xPosition="529.0" yPosition="554.0">
-      <Fields/>
+    <Class name="Language" package="" visibility="public" xPosition="783.0" yPosition="341.0">
+      <Fields>
+        <Field name="code" type="String" visibility="private"/>
+        <Field name="name" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="toString" returnType="String" visibility="public"/>
+        <Method name="getCode" returnType="String" visibility="public"/>
+        <Method name="getName" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Pay" package="" visibility="public" xPosition="993.0" yPosition="186.0">
+      <Fields>
+        <Field name="price" type="int" visibility="private"/>
+      </Fields>
       <Constructors/>
       <Methods/>
     </Class>
-    <Class name="Pay" package="" visibility="public" xPosition="642.0" yPosition="215.0">
-      <Fields/>
+    <Class name="Qualification" package="" visibility="public" xPosition="808.0" yPosition="8.0">
+      <Fields>
+        <Field name="value" type="int" visibility="private"/>
+        <Field name="comment" type="String" visibility="private"/>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="user" type="User" visibility="private"/>
+        <Field name="date" type="Date" visibility="private"/>
+        <Field name="sportsSpace" type="SportsSpace" visibility="private"/>
+      </Fields>
       <Constructors/>
-      <Methods/>
+      <Methods>
+        <Method name="getComment" returnType="String" visibility="public"/>
+        <Method name="getValue" returnType="int" visibility="public"/>
+      </Methods>
     </Class>
-    <Class name="Qualification" package="" visibility="public" xPosition="730.0" yPosition="49.0">
-      <Fields/>
-      <Constructors/>
-      <Methods/>
-    </Class>
-    <Class name="Notification" package="" visibility="public" xPosition="2369.0" yPosition="106.0">
+    <Class name="Notification" package="" visibility="public" xPosition="1010.0" yPosition="28.0">
       <Fields/>
       <Constructors/>
       <Methods/>
     </Class>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <HasRelation name="has" source="ReservationHistory" target="Reserve" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
     <IsRelation name="is" source="Administrator" target="User"/>
+    <HasRelation name="has" source="ReserveList" target="Reserve" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
   </ClassDiagramRelations>
 </ClassDiagram>
