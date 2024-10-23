@@ -8,6 +8,7 @@
         <Field name="name" type="String" visibility="private"/>
         <Field name="email" type="String" visibility="private"/>
         <Field name="preferredLanguage" type="Language" visibility="private"/>
+        <Field name="preferredType" type="NotificationType" visibility="private"/>
       </Fields>
       <Constructors/>
       <Methods>
@@ -29,9 +30,10 @@
           <Argument type="Reservation" name="reservation"/>
         </Method>
         <Method name="selectTypeUser" returnType="void" visibility="public"/>
+        <Method name="chooseNotificationType" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Reserve" package="" visibility="public" xPosition="982.0" yPosition="308.0">
+    <Class name="Reserve" package="" visibility="public" xPosition="881.0" yPosition="595.0">
       <Fields>
         <Field name="date" type="Date" visibility="private"/>
         <Field name="user" type="User" visibility="private"/>
@@ -47,7 +49,7 @@
         <Method name="getDetails" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="ReserveSystem" package="" visibility="private" xPosition="478.0" yPosition="158.0">
+    <Class name="ReserveSystem" package="" visibility="private" xPosition="458.0" yPosition="67.0">
       <Fields>
         <Field name="file" type="File" visibility="private"/>
         <Field name="reservations" type="int" visibility="private"/>
@@ -61,7 +63,7 @@
         <Method name="loadReservations" returnType="List&lt;Reservations&gt;" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="SportsSpace" package="" visibility="public" xPosition="418.0" yPosition="425.0">
+    <Class name="SportsSpace" package="" visibility="public" xPosition="418.0" yPosition="673.0">
       <Fields>
         <Field name="id" type="int" visibility="private"/>
         <Field name="Name" type="String" visibility="private"/>
@@ -87,7 +89,7 @@
         <Method name="getAverageRating" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Administrator" package="" visibility="public" xPosition="81.0" yPosition="514.0">
+    <Class name="Administrator" package="" visibility="public" xPosition="33.0" yPosition="619.0">
       <Fields>
         <Field name="isSupervisor" type="boolean" visibility="private"/>
         <Field name="password" type="String" visibility="private"/>
@@ -107,7 +109,7 @@
         <Method name="editReserves" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="ReserveList" package="" visibility="public" xPosition="982.0" yPosition="609.0">
+    <Class name="ReserveList" package="" visibility="public" xPosition="881.0" yPosition="924.0">
       <Fields>
         <Field name="reservationsOccupied" type="int" visibility="private"/>
         <Field name="reservationsAvailable" type="int" visibility="private"/>
@@ -115,7 +117,7 @@
       <Constructors/>
       <Methods/>
     </Class>
-    <Class name="Language" package="" visibility="public" xPosition="783.0" yPosition="341.0">
+    <Class name="Language" package="" visibility="public" xPosition="570.0" yPosition="417.0">
       <Fields>
         <Field name="code" type="String" visibility="private"/>
         <Field name="name" type="String" visibility="private"/>
@@ -127,14 +129,22 @@
         <Method name="getName" returnType="String" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Pay" package="" visibility="public" xPosition="993.0" yPosition="186.0">
+    <Class name="Pay" package="" visibility="public" xPosition="779.0" yPosition="304.0">
       <Fields>
-        <Field name="price" type="int" visibility="private"/>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="paymentMethod" type="String" visibility="private"/>
+        <Field name="reservation" type="Reserve" visibility="private"/>
+        <Field name="amount" type="Double" visibility="private"/>
+        <Field name="paymentDate" type="Date" visibility="private"/>
       </Fields>
       <Constructors/>
-      <Methods/>
+      <Methods>
+        <Method name="processPayment" returnType="void" visibility="public"/>
+        <Method name="refund" returnType="void" visibility="public"/>
+        <Method name="getPaymentDetails" returnType="String" visibility="public"/>
+      </Methods>
     </Class>
-    <Class name="Qualification" package="" visibility="public" xPosition="808.0" yPosition="8.0">
+    <Class name="Qualification" package="" visibility="public" xPosition="828.0" yPosition="39.0">
       <Fields>
         <Field name="value" type="int" visibility="private"/>
         <Field name="comment" type="String" visibility="private"/>
@@ -149,14 +159,40 @@
         <Method name="getValue" returnType="int" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Notification" package="" visibility="public" xPosition="1010.0" yPosition="28.0">
-      <Fields/>
+    <Class name="Notification" package="" visibility="public" xPosition="1053.0" yPosition="19.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="user" type="User" visibility="private"/>
+        <Field name="message" type="String" visibility="private"/>
+        <Field name="sendDate" type="Date" visibility="private"/>
+        <Field name="type" type="NotificationType" visibility="private"/>
+      </Fields>
       <Constructors/>
-      <Methods/>
+      <Methods>
+        <Method name="send" returnType="void" visibility="public"/>
+        <Method name="schedule" returnType="void" visibility="public">
+          <Argument type="Date" name="sendDate"/>
+        </Method>
+        <Method name="getNotificationDetails" returnType="String" visibility="public"/>
+      </Methods>
     </Class>
+    <Enum name="NotificationType" package="" visibility="public" xPosition="1104.0" yPosition="366.0">
+      <Literals>
+        <Literal name="EMAIL"/>
+        <Literal name="IN_APP"/>
+      </Literals>
+    </Enum>
+    <Enum name="ReservationStatus" package="" visibility="public" xPosition="1104.0" yPosition="514.0">
+      <Literals>
+        <Literal name="ACTIVE"/>
+        <Literal name="CANCELED"/>
+        <Literal name="PENDING"/>
+        <Literal name="FINISHED"/>
+      </Literals>
+    </Enum>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <IsRelation name="is" source="Administrator" target="User"/>
     <HasRelation name="has" source="ReserveList" target="Reserve" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <IsRelation name="is" source="Administrator" target="User"/>
   </ClassDiagramRelations>
 </ClassDiagram>
