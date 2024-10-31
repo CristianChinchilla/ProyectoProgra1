@@ -193,26 +193,17 @@
         <Literal name="IN_APP"/>
       </Literals>
     </Enum>
-    <Enum name="ReservationStatus" package="" visibility="public" xPosition="1025.0" yPosition="651.0">
-      <Literals>
-        <Literal name="ACTIVE"/>
-        <Literal name="CANCELED"/>
-        <Literal name="PENDING"/>
-        <Literal name="FINISHED"/>
-      </Literals>
-    </Enum>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <HasRelation name="type" source="Notification" target="NotificationType" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
     <HasRelation name="has" source="SportsSpace" target="Qualification" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <UseRelation name="use" source="User" target="ReserveSystem" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="type" source="Reserve" target="ReservationStatus" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <HasRelation name="has" source="ReserveList" target="Reserve" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <HasRelation name="has" source="ReserveSystem" target="ReserveList" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <UseRelation name="use" source="Reserve" target="Pay" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="has" source="Reserve" target="SportsSpace" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="has" source="ReserveSystem" target="Language" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
     <UseRelation name="use" source="Notification" target="Reserve" sourceCardinality="1..*" targetCardinality="1..1"/>
     <IsRelation name="is" source="Administrator" target="User"/>
-    <HasRelation name="has" source="ReserveSystem" target="Language" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="type" source="Notification" target="NotificationType" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <UseRelation name="use" source="Reserve" target="Pay" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="has" source="ReserveSystem" target="ReserveList" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="has" source="ReserveList" target="Reserve" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <UseRelation name="use" source="User" target="ReserveSystem" sourceCardinality="1..1" targetCardinality="1..1"/>
   </ClassDiagramRelations>
 </ClassDiagram>
