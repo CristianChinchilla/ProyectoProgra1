@@ -1,5 +1,7 @@
 package reservationsystem;
 
+import java.util.Date;
+
 public class Reserve {
 
     private Date date;

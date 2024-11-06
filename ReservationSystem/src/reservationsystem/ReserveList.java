@@ -1,5 +1,7 @@
 package reservationsystem;
 
+import java.util.List;
+
 public class ReserveList {
 
     private int reservationsOccupied;

@@ -1,5 +1,8 @@
 package reservationsystem;
 
+import java.io.File;
+import java.util.List;
+
 private class ReserveSystem {
 
     private File file;
