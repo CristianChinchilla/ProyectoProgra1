@@ -1,3 +1,5 @@
+package reservationsystem;
+
 public class SportsSpace {
 
     private int id;

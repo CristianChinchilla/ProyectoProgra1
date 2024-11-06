@@ -1,3 +1,5 @@
+package reservationsystem;
+
 public class Notification {
 
     private int id;

@@ -1,3 +1,5 @@
+package reservationsystem;
+
 public class Qualification {
 
     private int value;

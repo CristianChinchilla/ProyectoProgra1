@@ -1,3 +1,5 @@
+package reservationsystem;
+
 public class Reserve {
 
     private Date date;

@@ -1,3 +1,5 @@
+package reservationsystem;
+
 public class User {
 
     private int id;

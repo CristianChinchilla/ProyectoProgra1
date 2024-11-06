@@ -1,3 +1,5 @@
+package reservationsystem;
+
 public class Language {
 
     private String code;

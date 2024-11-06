@@ -1,3 +1,5 @@
+package reservationsystem;
+
 private class ReserveSystem {
 
     private File file;

@@ -1,3 +1,5 @@
+package reservationsystem;
+
 public class Administrator extends User {
 
     private boolean isSupervisor;

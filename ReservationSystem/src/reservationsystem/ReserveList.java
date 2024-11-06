@@ -1,3 +1,5 @@
+package reservationsystem;
+
 public class ReserveList {
 
     private int reservationsOccupied;
