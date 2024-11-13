@@ -3,15 +3,16 @@ package reservationsystem;
 import java.io.File;
 import java.util.List;
 
-private class ReserveSystem {
+class ReserveSystem {
 
-    private File file;
+    private File file = new File("Reservations");
 
-    private int reservations;
+    //private int reservations;
 
     private List<Reservations> reservations;
 
     private Lenguage lenguage;
+
 
     public Reservation saveReserves(Reservations reservations) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -39,7 +40,10 @@ private class ReserveSystem {
     }
 
     public Reservation makeReservation(Reservation reservation) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (file.exists()){
+            Reservations reserve = new Reservations();
+        }
+        return null;
     }
 
     public int cancelReservation(int reservationId) {
