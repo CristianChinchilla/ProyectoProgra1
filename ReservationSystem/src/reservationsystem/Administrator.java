@@ -5,25 +5,55 @@ import java.util.List;
 public class Administrator extends User {
 
     private boolean isSupervisor;
-
     private String password;
 
-    public SportsSpace addSportsSpace(SportsSpace space) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    // Constructor
+    public Administrator(int id, String name, String email, String password, boolean isSupervisor) {
+        super(id, name, email);
+        this.password = password;
+        this.isSupervisor = isSupervisor;
     }
 
-    public SportsSpace modifySportsSpace(SportsSpace space) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    // Método para agregar un nuevo espacio deportivo
+    public SportsSpace addSportsSpace(ReserveSystem system, SportsSpace space) {
+        system.addSportsSpace(space);
+        System.out.println("Espacio deportivo agregado exitosamente.");
+        return space;
     }
 
-    public int removeSportsSpace(int spaceID) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    // Método para modificar un espacio deportivo existente
+    public void modifySportsSpace(ReserveSystem system, SportsSpace updatedSpace) {
+        if (system.updateSportsSpace(updatedSpace)) {
+            System.out.println("Espacio deportivo modificado exitosamente.");
+        } else {
+            System.out.println("No se encontró el espacio deportivo con ID: " + updatedSpace.getId());
+        }
     }
 
-    public List<Reservation> viewAllReservationHistory() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    // Método para eliminar un espacio deportivo
+    public void removeSportsSpace(ReserveSystem system, int spaceID) {
+        if (system.deleteSportsSpace(spaceID)) {
+            System.out.println("Espacio deportivo eliminado exitosamente.");
+        } else {
+            System.out.println("No se encontró el espacio deportivo con ID: " + spaceID);
+        }
     }
 
-    public void editReserves() {
+    // Método para ver todas las reservas realizadas
+    public List<Reservation> viewAllReservationHistory(ReserveSystem system) {
+        List<Reservation> reservations = system.viewReservationHistory();
+        for (Reservation reservation : reservations) {
+            System.out.println(reservation.getDetails());
+        }
+        return reservations;
+    }
+
+    // Método para editar reservas
+    public void editReservation(ReserveSystem system, int reservationId, Reservation newReservation) {
+        if (system.updateReservation(reservationId, newReservation)) {
+            System.out.println("Reserva actualizada exitosamente.");
+        } else {
+            System.out.println("No se pudo actualizar la reserva con ID: " + reservationId);
+        }
     }
 }
