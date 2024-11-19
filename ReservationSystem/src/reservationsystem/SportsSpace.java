@@ -56,3 +56,11 @@ public class SportsSpace {
     public double getAverageRating() {
         if (ratings.isEmpty()) {
             return 0; // Si no hay calificacione
+
+    boolean getDetails() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    boolean getDetails() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }

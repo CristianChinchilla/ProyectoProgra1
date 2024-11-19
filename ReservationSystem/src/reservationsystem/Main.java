@@ -45,22 +45,16 @@ public class Main {
             String choice = scanner.nextLine();
 
             switch (choice) {
-                case "1":
-                    // Registro de usuario
+                case "1" -> // Registro de usuario
                     currentUser = register(scanner, reserveSystem);
-                    break;
-                case "2":
-                    // Inicio de sesión
+                case "2" -> // Inicio de sesión
                     currentUser = login(scanner, reserveSystem);
-                    break;
-                case "3":
+                case "3" -> {
                     // Salir del sistema
                     exit = true;
                     System.out.println("Gracias por usar el sistema. ¡Hasta pronto!");
-                    break;
-                default:
-                    System.out.println("Opción no válida. Por favor, intente de nuevo.");
-                    break;
+                }
+                default -> System.out.println("Opción no válida. Por favor, intente de nuevo.");
             }
 
             // Si el usuario ha iniciado sesión, mostrar menú de opciones
@@ -86,63 +80,53 @@ public class Main {
                     String userChoice = scanner.nextLine();
 
                     switch (userChoice) {
-                        case "1":
-                            // Ver espacios deportivos disponibles
+                        case "1" -> // Ver espacios deportivos disponibles
                             viewAvailableSpaces(reserveSystem);
-                            break;
-                        case "2":
-                            // Hacer una reserva
+                        case "2" -> // Hacer una reserva
                             makeReservation(scanner, reserveSystem, currentUser);
-                            break;
-                        case "3":
-                            // Cancelar una reserva
+                        case "3" -> // Cancelar una reserva
                             cancelReservation(scanner, reserveSystem, currentUser);
-                            break;
-                        case "4":
-                            // Ver historial de reservas
+                        case "4" -> // Ver historial de reservas
                             viewReservationHistory(reserveSystem, currentUser);
-                            break;
-                        case "5":
+                        case "5" -> {
                             // Cerrar sesión
                             loggedIn = false;
                             currentUser = null;
                             System.out.println("Sesión cerrada.");
-                            break;
-                        case "6":
+                        }
+                        case "6" -> {
                             if (currentUser instanceof Administrator) {
                                 // Agregar un espacio deportivo
                                 addSportsSpace(scanner, reserveSystem, (Administrator) currentUser);
                             } else {
                                 System.out.println("Opción no válida.");
                             }
-                            break;
-                        case "7":
+                        }
+                        case "7" -> {
                             if (currentUser instanceof Administrator) {
                                 // Modificar un espacio deportivo
                                 modifySportsSpace(scanner, reserveSystem, (Administrator) currentUser);
                             } else {
                                 System.out.println("Opción no válida.");
                             }
-                            break;
-                        case "8":
+                        }
+                        case "8" -> {
                             if (currentUser instanceof Administrator) {
                                 // Eliminar un espacio deportivo
                                 removeSportsSpace(scanner, reserveSystem, (Administrator) currentUser);
                             } else {
                                 System.out.println("Opción no válida.");
                             }
-                            break;
-                        case "9":
+                        }
+                        case "9" -> {
                             if (currentUser instanceof Administrator) {
                                 // Ver todas las reservas
                                 ((Administrator) currentUser).viewAllReservationHistory(reserveSystem);
                             } else {
                                 System.out.println("Opción no válida.");
                             }
-                            break;
-                        default:
-                            System.out.println("Opción no válida. Por favor, intente de nuevo.");
-                            break;
+                        }
+                        default -> System.out.println("Opción no válida. Por favor, intente de nuevo.");
                     }
                 }
             }

@@ -108,4 +108,16 @@ class ReserveSystem {
         System.out.println("Compartiendo la reserva en redes sociales...");
         // Implementar integración real con redes sociales aquí
     }
+
+    public void loadSportsSpaces() {
+        
+    }
+
+    void saveSportsSpaces() {
+        
+    }
+
+    User authenticateUser(String email, String password) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
