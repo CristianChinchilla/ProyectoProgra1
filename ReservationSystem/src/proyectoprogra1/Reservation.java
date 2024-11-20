@@ -26,6 +26,10 @@ public class Reservation {
         this.price = price;
         this.status = "Confirmed";
     }
+    
+    public String getStatus() {
+    return status;
+}
 
     public int getId() {
         return id;

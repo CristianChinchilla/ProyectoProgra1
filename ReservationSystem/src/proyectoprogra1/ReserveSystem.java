@@ -2,14 +2,17 @@ package proyectoprogra1;
 
 import java.util.ArrayList;
 import java.util.List;
-import proyectoprogra1.Reservation;
-import proyectoprogra1.SportsSpace;
-import proyectoprogra1.User;
-import proyectoprogra1.Language;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class ReserveSystem {
+
     private List<Reservation> reservations; // Lista de reservas
     private List<SportsSpace> sportsSpaces; // Lista de espacios deportivos
+    private int nextSpaceId;                // Contador para IDs de espacios deportivos
+    private int nextUserId;                 // Contador para IDs de usuarios
     private List<User> users;               // Lista de usuarios registrados
     private Language currentLanguage;       // Idioma actual del sistema
 
@@ -18,6 +21,16 @@ public class ReserveSystem {
         this.sportsSpaces = new ArrayList<>();
         this.users = new ArrayList<>();
         this.currentLanguage = new Language("EN", "English"); // Idioma predeterminado
+    }
+
+    // Método para generar un ID único para los espacios deportivos
+    public int generateSpaceId() {
+        return nextSpaceId++;
+    }
+
+    // Método para generar un ID único para los usuarios
+    public int generateUserId() {
+        return nextUserId++;
     }
 
     // Cambiar el idioma del sistema
@@ -29,17 +42,22 @@ public class ReserveSystem {
     // Registrar un nuevo usuario
     public void registerUser(User user) {
         users.add(user);
-        System.out.println(currentLanguage.getCode().equals("ES") ?
-                "Usuario registrado exitosamente: " + user.getName() :
-                "User registered successfully: " + user.getName());
+        System.out.println(currentLanguage.getCode().equals("ES")
+                ? "Usuario registrado exitosamente: " + user.getName()
+                : "User registered successfully: " + user.getName());
     }
 
     // Agregar un espacio deportivo
+    // Agregar un espacio deportivo
     public void addSportsSpace(SportsSpace space) {
+        // Asignar ID de manera automática
+        space.setId(sportsSpaces.size() + 1); // El ID empieza desde 1
         sportsSpaces.add(space);
-        System.out.println(currentLanguage.getCode().equals("ES") ?
-                "Espacio deportivo agregado: " + space.getName() :
-                "Sports space added: " + space.getName());
+
+        // Imprimir el ID del nuevo espacio
+        System.out.println(currentLanguage.getCode().equals("ES")
+                ? "Espacio deportivo registrado con éxito. ID: " + space.getId()
+                : "Sports space successfully registered. ID: " + space.getId());
     }
 
     // Reservar un espacio deportivo
@@ -51,15 +69,47 @@ public class ReserveSystem {
             reservations.add(reservation);
             reservation.getSportsSpace().markAsReserved(reservation);
             reservation.getUser().addReservation(reservation);
-            System.out.println(currentLanguage.getCode().equals("ES") ?
-                    "Reserva realizada exitosamente para " + reservation.getUser().getName() :
-                    "Reservation successfully made for " + reservation.getUser().getName());
+            System.out.println(currentLanguage.getCode().equals("ES")
+                    ? "Reserva realizada exitosamente para " + reservation.getUser().getName()
+                    : "Reservation successfully made for " + reservation.getUser().getName());
             return true;
         }
-        System.out.println(currentLanguage.getCode().equals("ES") ?
-                "No se pudo realizar la reserva. El espacio no está disponible." :
-                "Reservation failed. The space is not available.");
+        System.out.println(currentLanguage.getCode().equals("ES")
+                ? "No se pudo realizar la reserva. El espacio no está disponible."
+                : "Reservation failed. The space is not available.");
         return false;
+    }
+
+    public void saveData() {
+        try {
+            // Guardar espacios deportivos
+            BufferedWriter spaceWriter = new BufferedWriter(new FileWriter("sportsSpaces.txt"));
+            for (SportsSpace space : sportsSpaces) {
+                spaceWriter.write(space.getId() + "," + space.getName() + "," + space.getType() + "," + space.getCapacity());
+                spaceWriter.newLine();
+            }
+            spaceWriter.close();
+
+            // Guardar reservas
+            BufferedWriter reservationWriter = new BufferedWriter(new FileWriter("reservations.txt"));
+            for (Reservation reservation : reservations) {
+                reservationWriter.write(reservation.getId() + "," + reservation.getUser().getId() + ","
+                        + reservation.getSportsSpace().getId() + "," + reservation.getDate() + ","
+                        + reservation.getStartTime() + "," + reservation.getEndTime() + ","
+                        + reservation.getPrice() + "," + reservation.getStatus());
+                reservationWriter.newLine();
+            }
+            reservationWriter.close();
+
+            System.out.println(currentLanguage.getCode().equals("ES")
+                    ? "Datos guardados correctamente."
+                    : "Data saved successfully.");
+        } catch (IOException e) {
+            System.out.println(currentLanguage.getCode().equals("ES")
+                    ? "Error al guardar los datos."
+                    : "Error saving data.");
+            e.printStackTrace();
+        }
     }
 
     // Cancelar una reserva
@@ -69,27 +119,60 @@ public class ReserveSystem {
                 reservations.remove(reservation);
                 reservation.getSportsSpace().unmarkReservation(reservation);
                 reservation.getUser().cancelReservation(reservationId);
-                System.out.println(currentLanguage.getCode().equals("ES") ?
-                        "Reserva cancelada exitosamente: ID " + reservationId :
-                        "Reservation successfully cancelled: ID " + reservationId);
+                System.out.println(currentLanguage.getCode().equals("ES")
+                        ? "Reserva cancelada exitosamente: ID " + reservationId
+                        : "Reservation successfully cancelled: ID " + reservationId);
                 return true;
             }
         }
-        System.out.println(currentLanguage.getCode().equals("ES") ?
-                "No se encontró la reserva con ID: " + reservationId :
-                "Reservation with ID " + reservationId + " not found.");
+        System.out.println(currentLanguage.getCode().equals("ES")
+                ? "No se encontró la reserva con ID: " + reservationId
+                : "Reservation with ID " + reservationId + " not found.");
         return false;
+    }
+
+    public void viewAllReservations() {
+        if (reservations.isEmpty()) {
+            System.out.println(currentLanguage.getCode().equals("ES")
+                    ? "No hay reservas realizadas."
+                    : "No reservations made.");
+        } else {
+            System.out.println(currentLanguage.getCode().equals("ES")
+                    ? "--- Listado de Reservas ---"
+                    : "--- Reservation List ---");
+
+            for (Reservation reservation : reservations) {
+                System.out.println(reservation.getDetails(currentLanguage));
+                System.out.println("-------------------------");
+            }
+        }
+    }
+
+    public void listSportsSpaces() {
+        if (sportsSpaces.isEmpty()) {
+            System.out.println(currentLanguage.getCode().equals("ES")
+                    ? "No hay espacios deportivos disponibles."
+                    : "No sports spaces available.");
+        } else {
+            System.out.println(currentLanguage.getCode().equals("ES")
+                    ? "--- Espacios Deportivos Disponibles ---"
+                    : "--- Available Sports Spaces ---");
+
+            for (SportsSpace space : sportsSpaces) {
+                System.out.println(space.getDetails(currentLanguage));
+            }
+        }
     }
 
     // Ver historial de reservas del sistema
     public void viewSystemReservationHistory() {
-        System.out.println(currentLanguage.getCode().equals("ES") ?
-                "Historial de todas las reservas del sistema:" :
-                "System-wide reservation history:");
+        System.out.println(currentLanguage.getCode().equals("ES")
+                ? "Historial de todas las reservas del sistema:"
+                : "System-wide reservation history:");
         if (reservations.isEmpty()) {
-            System.out.println(currentLanguage.getCode().equals("ES") ?
-                    "No hay reservas registradas." :
-                    "No reservations recorded.");
+            System.out.println(currentLanguage.getCode().equals("ES")
+                    ? "No hay reservas registradas."
+                    : "No reservations recorded.");
         } else {
             for (Reservation reservation : reservations) {
                 System.out.println(reservation.getDetails(currentLanguage));
@@ -97,11 +180,20 @@ public class ReserveSystem {
         }
     }
 
+    public SportsSpace findSportsSpaceById(int id) {
+        for (SportsSpace space : sportsSpaces) {
+            if (space.getId() == id) {
+                return space; // Espacio deportivo encontrado
+            }
+        }
+        return null; // No se encontró el espacio deportivo con el ID dado
+    }
+
     // Listar espacios deportivos disponibles
     public void listAvailableSportsSpaces() {
-        System.out.println(currentLanguage.getCode().equals("ES") ?
-                "Espacios deportivos disponibles:" :
-                "Available sports spaces:");
+        System.out.println(currentLanguage.getCode().equals("ES")
+                ? "Espacios deportivos disponibles:"
+                : "Available sports spaces:");
         for (SportsSpace space : sportsSpaces) {
             System.out.println("- " + space.getName());
         }
@@ -109,11 +201,12 @@ public class ReserveSystem {
 
     // Listar usuarios registrados
     public void listRegisteredUsers() {
-        System.out.println(currentLanguage.getCode().equals("ES") ?
-                "Usuarios registrados:" :
-                "Registered users:");
+        System.out.println(currentLanguage.getCode().equals("ES")
+                ? "Usuarios registrados:"
+                : "Registered users:");
         for (User user : users) {
             System.out.println("- " + user.getName());
         }
     }
+
 }

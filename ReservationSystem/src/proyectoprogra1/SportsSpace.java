@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SportsSpace {
+
     private int id;                         // ID único del espacio deportivo
     private String name;                    // Nombre del espacio deportivo
     private String type;                    // Tipo de espacio (ejemplo: cancha, gimnasio)
@@ -30,6 +31,11 @@ public class SportsSpace {
     // Getters y Setters
     public int getId() {
         return id;
+    }
+
+    // Modificación en SportsSpace
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -65,22 +71,24 @@ public class SportsSpace {
     }
 
     // Métodos clave
-
     /**
      * Verifica si el espacio está disponible para la fecha y horas dadas.
      *
-     * @param date      Fecha a verificar.
+     * @param date Fecha a verificar.
      * @param startTime Hora de inicio a verificar.
-     * @param endTime   Hora de fin a verificar.
+     * @param endTime Hora de fin a verificar.
      * @return true si está disponible, false de lo contrario.
      */
     public boolean isAvailable(LocalDate date, LocalTime startTime, LocalTime endTime) {
         for (Schedule schedule : availableSchedules) {
-            if (schedule.isAvailable(date, startTime, endTime)) {
-                return true;
+            // Verifica si la fecha y las horas coinciden con un horario ya reservado
+            if (schedule.getDate().equals(date) && schedule.isReserved()) {
+                if ((startTime.isBefore(schedule.getEndTime()) && endTime.isAfter(schedule.getStartTime()))) {
+                    return false; // Conflicto de horario
+                }
             }
         }
-        return false;
+        return true; // No hay conflictos
     }
 
     /**
@@ -150,18 +158,18 @@ public class SportsSpace {
 
         if (language.getCode().equals("ES")) {
             details.append("Espacio Deportivo #").append(id)
-                   .append("\nNombre: ").append(name)
-                   .append("\nTipo: ").append(type)
-                   .append("\nCapacidad: ").append(capacity)
-                   .append("\nPromedio de Calificaciones: ").append(qualification.getAverage())
-                   .append("\nHorarios Disponibles:\n");
+                    .append("\nNombre: ").append(name)
+                    .append("\nTipo: ").append(type)
+                    .append("\nCapacidad: ").append(capacity)
+                    .append("\nPromedio de Calificaciones: ").append(qualification.getAverage())
+                    .append("\nHorarios Disponibles:\n");
         } else {
             details.append("Sports Space #").append(id)
-                   .append("\nName: ").append(name)
-                   .append("\nType: ").append(type)
-                   .append("\nCapacity: ").append(capacity)
-                   .append("\nAverage Rating: ").append(qualification.getAverage())
-                   .append("\nAvailable Schedules:\n");
+                    .append("\nName: ").append(name)
+                    .append("\nType: ").append(type)
+                    .append("\nCapacity: ").append(capacity)
+                    .append("\nAverage Rating: ").append(qualification.getAverage())
+                    .append("\nAvailable Schedules:\n");
         }
 
         for (Schedule schedule : availableSchedules) {
