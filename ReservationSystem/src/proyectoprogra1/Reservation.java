@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Reservation {
-    private static int idCounter = 1; // Contador estático para asignar IDs únicos a las reservas
+    private static int idCounter = 1; // Contador estático para IDs únicos
 
     private int id;                     // ID único de la reserva
     private User user;                  // Usuario que realizó la reserva
@@ -13,9 +13,8 @@ public class Reservation {
     private LocalTime startTime;        // Hora de inicio de la reserva
     private LocalTime endTime;          // Hora de fin de la reserva
     private double price;               // Precio de la reserva
-    private String status;              // Estado de la reserva (por ejemplo, "Confirmada", "Cancelada")
+    private String status;              // Estado de la reserva
 
-    // Constructor
     public Reservation(User user, SportsSpace sportsSpace, LocalDate date,
                        LocalTime startTime, LocalTime endTime, double price) {
         this.id = idCounter++;
@@ -25,10 +24,9 @@ public class Reservation {
         this.startTime = startTime;
         this.endTime = endTime;
         this.price = price;
-        this.status = "Confirmada";
+        this.status = "Confirmed";
     }
 
-    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -57,22 +55,11 @@ public class Reservation {
         return price;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    // Método para obtener los detalles de la reserva
-    public String getDetails() {
-        return "ID de Reserva: " + id +
-            "\nUsuario: " + user.getName() +
-            "\nEspacio Deportivo: " + sportsSpace.getName() +
-            "\nFecha: " + date.toString() +
-            "\nHora: " + startTime.toString() + " - " + endTime.toString() +
-            "\nPrecio: $" + price +
-            "\nEstado: " + status;
+    public String getDetails(Language language) {
+        return (language.getCode().equals("ES") ?
+                "ID de Reserva: " + id + "\nUsuario: " + user.getName() + "\nEspacio Deportivo: " + sportsSpace.getName() +
+                "\nFecha: " + date + "\nHora: " + startTime + " - " + endTime + "\nPrecio: $" + price :
+                "Reservation ID: " + id + "\nUser: " + user.getName() + "\nSports Space: " + sportsSpace.getName() +
+                "\nDate: " + date + "\nTime: " + startTime + " - " + endTime + "\nPrice: $" + price);
     }
 }
