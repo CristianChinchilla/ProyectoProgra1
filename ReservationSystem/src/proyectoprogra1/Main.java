@@ -68,6 +68,7 @@ public class Main {
                             ? "--- Espacios Disponibles ---"
                             : "--- Available Spaces ---");
                     reserveSystem.listSportsSpaces();
+                    break;
 
                 case 3:
                     // Realizar una reserva
