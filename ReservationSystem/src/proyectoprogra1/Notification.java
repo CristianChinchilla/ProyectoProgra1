@@ -6,8 +6,8 @@ public class Notification {
     private int id;                      // ID único de la notificación
     private String message;              // Mensaje de la notificación
     private LocalDateTime dateTime;      // Fecha y hora de la notificación
-    private NotificationType type;       // Tipo de notificación (Email, App, etc.)
-    private boolean isSent;              // Indica si la notificación fue enviada
+    private NotificationType type;       // Tipo de notificación (EMAIL, APP, SMS, etc.)
+    private boolean isSent;              // Indica si la notificación ha sido enviada
 
     // Constructor
     public Notification(int id, String message, LocalDateTime dateTime, NotificationType type) {
@@ -51,26 +51,46 @@ public class Notification {
         return isSent;
     }
 
-    public void markAsSent() {
-        this.isSent = true;
+    // Métodos clave
+
+    /**
+     * Envía la notificación si no ha sido enviada previamente.
+     * @param language Idioma en el que se generará el mensaje de confirmación.
+     */
+    public void send(Language language) {
+        if (!isSent) {
+            System.out.println(language.getCode().equals("ES") ?
+                    "Enviando notificación (" + type + "): " + message :
+                    "Sending notification (" + type + "): " + message);
+            isSent = true;
+        } else {
+            System.out.println(language.getCode().equals("ES") ?
+                    "La notificación ya fue enviada." :
+                    "Notification has already been sent.");
+        }
     }
 
-    // Métodos clave
-    public void send() {
-        if (!isSent) {
-            System.out.println("Sending " + type + " notification: " + message);
-            markAsSent(); // Marca como enviada
-        } else {
-            System.out.println("Notification already sent.");
-        }
+    /**
+     * Devuelve los detalles de la notificación.
+     * @param language Idioma en el que se generará el mensaje.
+     * @return Cadena con los detalles de la notificación.
+     */
+    public String getDetails(Language language) {
+        return language.getCode().equals("ES") ?
+                "Notificación #" + id +
+                "\nMensaje: " + message +
+                "\nFecha y Hora: " + dateTime +
+                "\nTipo: " + type +
+                "\nEstado: " + (isSent ? "Enviada" : "Pendiente") :
+                "Notification #" + id +
+                "\nMessage: " + message +
+                "\nDateTime: " + dateTime +
+                "\nType: " + type +
+                "\nStatus: " + (isSent ? "Sent" : "Pending");
     }
 
     @Override
     public String toString() {
-        return "Notification ID: " + id +
-               "\nMessage: " + message +
-               "\nDateTime: " + dateTime +
-               "\nType: " + type +
-               "\nStatus: " + (isSent ? "Sent" : "Pending");
+        return "Notification #" + id + " [" + type + "] - " + (isSent ? "Sent" : "Pending");
     }
 }

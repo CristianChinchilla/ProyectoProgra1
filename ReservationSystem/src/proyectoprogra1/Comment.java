@@ -1,17 +1,17 @@
 package proyectoprogra1;
 
 public class Comment {
-    private int id;           // ID único del comentario
-    private String text;      // Contenido del comentario
-    private User user;        // Usuario que realizó el comentario
-    private int relatedRatingId; // ID de la calificación relacionada, si existe
+    private int id;             // ID único del comentario
+    private String text;        // Contenido del comentario
+    private User user;          // Usuario que realizó el comentario
+    private Reservation reservation; // Reserva asociada al comentario (opcional)
 
     // Constructor
-    public Comment(int id, String text, User user, int relatedRatingId) {
+    public Comment(int id, String text, User user, Reservation reservation) {
         this.id = id;
         this.text = text;
         this.user = user;
-        this.relatedRatingId = relatedRatingId;
+        this.reservation = reservation;
     }
 
     // Getters y Setters
@@ -35,19 +35,31 @@ public class Comment {
         this.user = user;
     }
 
-    public int getRelatedRatingId() {
-        return relatedRatingId;
+    public Reservation getReservation() {
+        return reservation;
     }
 
-    public void setRelatedRatingId(int relatedRatingId) {
-        this.relatedRatingId = relatedRatingId;
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 
     // Métodos clave
+    public String getDetails(Language language) {
+        if (language.getCode().equals("ES")) {
+            return "Comentario #" + id +
+                   "\nUsuario: " + user.getName() +
+                   "\nReserva asociada: " + (reservation != null ? reservation.getId() : "Sin reserva") +
+                   "\nTexto: " + text;
+        } else {
+            return "Comment #" + id +
+                   "\nUser: " + user.getName() +
+                   "\nAssociated Reservation: " + (reservation != null ? reservation.getId() : "No reservation") +
+                   "\nText: " + text;
+        }
+    }
+
     @Override
     public String toString() {
-        return "Comment by " + user.getName() + 
-               " (Rating ID: " + (relatedRatingId > 0 ? relatedRatingId : "No Rating") + "):\n" + 
-               text;
+        return "Comment ID: " + id + " by " + user.getName();
     }
 }

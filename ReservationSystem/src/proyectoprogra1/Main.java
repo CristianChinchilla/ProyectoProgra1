@@ -1,14 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package proyectoprogra1;
 
 /**
- * @author 
+ * @author Cristian Gerardo Chichilla Fonseca
  * @author Eidan Alexandre Picado Leiva
- * @author 
- * @author 
+ * @author Gerald Armando Maroto Fernandez
+ * @author Jefferson Alexander Soto Ulate
  */
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -56,7 +53,7 @@ public class Main {
 
         // Agregar horarios disponibles
         soccerField.getAvailableSchedules().add(
-            new Schedule(LocalDate.of(2024, 11, 20), LocalTime.of(9, 0), LocalTime.of(11, 0))
+        new Schedule(1, LocalDate.of(2024, 11, 20), LocalTime.of(9, 0), LocalTime.of(11, 0))
         );
 
         // Realizar reservas

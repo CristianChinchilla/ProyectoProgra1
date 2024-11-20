@@ -6,8 +6,10 @@ package proyectoprogra1;
 
 /**
  *
- * @author eidan
- */m
+ * @author Eidan Alexandre Picado Leiva
+ * @author Cristian Gerardo Chichilla Fonseca
+ * @author Jefferson Alexander Soto Ulate
+ */
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -15,7 +17,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 
 public class TelegramNotifier extends TelegramLongPollingBot {
-
     private final String botToken;      // Token del bot
     private final String botUsername;  // Username del bot
 
@@ -25,9 +26,18 @@ public class TelegramNotifier extends TelegramLongPollingBot {
         this.botUsername = botUsername;
     }
 
+    // Métodos abstractos sobrescritos de TelegramLongPollingBot
     @Override
     public void onUpdateReceived(Update update) {
-        // Manejo de mensajes entrantes (opcional)
+        // Manejo de mensajes entrantes desde los usuarios (opcional)
+        if (update.hasMessage() && update.getMessage().hasText()) {
+            String chatId = update.getMessage().getChatId().toString();
+            String incomingMessage = update.getMessage().getText();
+            System.out.println("Mensaje recibido: " + incomingMessage);
+
+            // Respuesta automática (opcional)
+            sendMessage(chatId, "Gracias por tu mensaje. Este bot envía notificaciones.");
+        }
     }
 
     @Override
@@ -40,28 +50,41 @@ public class TelegramNotifier extends TelegramLongPollingBot {
         return botToken;
     }
 
-    // Método para enviar mensajes con soporte de idioma
-    public void sendReservationNotification(String chatId, String languageCode, String spaceName, String date, String startTime, String endTime) {
+    // Métodos clave
+
+    /**
+     * Enviar notificaciones de reserva con soporte multilingüe.
+     *
+     * @param chatId       ID del chat de Telegram del destinatario.
+     * @param reservation  Objeto Reservation que contiene los detalles de la reserva.
+     * @param language     Idioma en el que se generará el mensaje.
+     */
+    public void sendReservationNotification(String chatId, Reservation reservation, Language language) {
         String message;
 
-        // Mensaje basado en el idioma preferido
-        if (languageCode.equalsIgnoreCase("ES")) {
+        // Crear mensaje basado en el idioma
+        if (language.getCode().equals("ES")) {
             message = "¡Reserva confirmada!\n" +
-                      "Espacio: " + spaceName + "\n" +
-                      "Fecha: " + date + "\n" +
-                      "Hora: " + startTime + " a " + endTime + ".";
-        } else { // Default a inglés
+                      "Espacio: " + reservation.getSportsSpace().getName() + "\n" +
+                      "Fecha: " + reservation.getDate() + "\n" +
+                      "Hora: " + reservation.getStartTime() + " a " + reservation.getEndTime() + ".";
+        } else {
             message = "Reservation confirmed!\n" +
-                      "Space: " + spaceName + "\n" +
-                      "Date: " + date + "\n" +
-                      "Time: " + startTime + " to " + endTime + ".";
+                      "Space: " + reservation.getSportsSpace().getName() + "\n" +
+                      "Date: " + reservation.getDate() + "\n" +
+                      "Time: " + reservation.getStartTime() + " to " + reservation.getEndTime() + ".";
         }
 
-        // Enviar el mensaje a Telegram
+        // Enviar mensaje
         sendMessage(chatId, message);
     }
 
-    // Método genérico para enviar mensajes
+    /**
+     * Enviar mensajes genéricos a un chat de Telegram.
+     *
+     * @param chatId  ID del chat de Telegram del destinatario.
+     * @param message Mensaje a enviar.
+     */
     public void sendMessage(String chatId, String message) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
@@ -73,5 +96,43 @@ public class TelegramNotifier extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             System.err.println("Error al enviar mensaje: " + e.getMessage());
         }
+    }
+
+    /**
+     * Enviar notificaciones personalizadas según el tipo.
+     *
+     * @param chatId   ID del chat de Telegram del destinatario.
+     * @param type     Tipo de notificación.
+     * @param content  Contenido adicional para la notificación.
+     * @param language Idioma en el que se generará el mensaje.
+     */
+    public void sendCustomNotification(String chatId, NotificationType type, String content, Language language) {
+        String message;
+
+        // Crear mensaje basado en el tipo y el idioma
+        switch (type) {
+            case EMAIL:
+                message = language.getCode().equals("ES") ?
+                        "Nueva notificación por correo:\n" + content :
+                        "New email notification:\n" + content;
+                break;
+            case APP:
+                message = language.getCode().equals("ES") ?
+                        "Nueva notificación en la aplicación:\n" + content :
+                        "New app notification:\n" + content;
+                break;
+            case SMS:
+                message = language.getCode().equals("ES") ?
+                        "Nueva notificación por SMS:\n" + content :
+                        "New SMS notification:\n" + content;
+                break;
+            default:
+                message = language.getCode().equals("ES") ?
+                        "Notificación desconocida:\n" + content :
+                        "Unknown notification:\n" + content;
+        }
+
+        // Enviar mensaje
+        sendMessage(chatId, message);
     }
 }
