@@ -15,7 +15,7 @@ public class Rating {
         this.comment = comment;
         this.user = user;
     }
-
+    //Getters y setters
     public int getId() {
         return id;
     }
@@ -27,7 +27,11 @@ public class Rating {
     public String getComment() {
         return comment;
     }
-
+    /**
+     * Devuelve la calificación del espació deportivo escogido
+     * @param language
+     * @return 
+     */
     public String getDetails(Language language) {
         if (language.getCode().equals("ES")) {
             return "Calificación: " + stars + " estrellas. Comentario: " + comment;

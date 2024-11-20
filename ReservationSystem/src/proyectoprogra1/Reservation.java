@@ -14,7 +14,7 @@ public class Reservation {
     private LocalTime endTime;          // Hora de fin de la reserva
     private double price;               // Precio de la reserva
     private String status;              // Estado de la reserva
-
+   //Constructor 
     public Reservation(User user, SportsSpace sportsSpace, LocalDate date,
                        LocalTime startTime, LocalTime endTime, double price) {
         this.id = idCounter++;
@@ -26,7 +26,7 @@ public class Reservation {
         this.price = price;
         this.status = "Confirmed";
     }
-    
+    //Getters y setters
     public String getStatus() {
     return status;
 }
@@ -58,7 +58,11 @@ public class Reservation {
     public double getPrice() {
         return price;
     }
-
+    /**
+     * Devuelve los detalles de la reservación seleccionada
+     * @param language
+     * @return 
+     */
     public String getDetails(Language language) {
         return (language.getCode().equals("ES") ?
                 "ID de Reserva: " + id + "\nUsuario: " + user.getName() + "\nEspacio Deportivo: " + sportsSpace.getName() +

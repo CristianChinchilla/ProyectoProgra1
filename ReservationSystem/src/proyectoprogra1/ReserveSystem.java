@@ -79,7 +79,9 @@ public class ReserveSystem {
                 : "Reservation failed. The space is not available.");
         return false;
     }
-
+    /**
+     * Guarda toda la información acerca de los espacios deportivos y las reservaciones
+     */
     public void saveData() {
         try {
             // Guardar espacios deportivos
@@ -112,7 +114,11 @@ public class ReserveSystem {
         }
     }
 
-    // Cancelar una reserva
+    /**
+     * Cancela una reservacion ya existente
+     * @param reservationId
+     * @return 
+     */
     public boolean cancelReservation(int reservationId) {
         for (Reservation reservation : reservations) {
             if (reservation.getId() == reservationId) {
@@ -130,7 +136,9 @@ public class ReserveSystem {
                 : "Reservation with ID " + reservationId + " not found.");
         return false;
     }
-
+    /**
+     * Muestra una lista con todas las reservaciones creadas
+     */
     public void viewAllReservations() {
         if (reservations.isEmpty()) {
             System.out.println(currentLanguage.getCode().equals("ES")
@@ -147,7 +155,9 @@ public class ReserveSystem {
             }
         }
     }
-
+    /**
+     * Mustras una lista con todos los espacios deportivos guardados
+     */
     public void listSportsSpaces() {
         if (sportsSpaces.isEmpty()) {
             System.out.println(currentLanguage.getCode().equals("ES")
@@ -164,7 +174,9 @@ public class ReserveSystem {
         }
     }
 
-    // Ver historial de reservas del sistema
+    /**
+     * Muestra un historia con todas las resevar hechas anteriormente
+     */
     public void viewSystemReservationHistory() {
         System.out.println(currentLanguage.getCode().equals("ES")
                 ? "Historial de todas las reservas del sistema:"
@@ -179,7 +191,11 @@ public class ReserveSystem {
             }
         }
     }
-
+    /**
+     * Busca un espacio deportivo mediante el ID de este
+     * @param id
+     * @return 
+     */
     public SportsSpace findSportsSpaceById(int id) {
         for (SportsSpace space : sportsSpaces) {
             if (space.getId() == id) {
@@ -188,8 +204,9 @@ public class ReserveSystem {
         }
         return null; // No se encontró el espacio deportivo con el ID dado
     }
-
-    // Listar espacios deportivos disponibles
+    /**
+     * Muestra una lista con todos los espacios disponibles
+     */
     public void listAvailableSportsSpaces() {
         System.out.println(currentLanguage.getCode().equals("ES")
                 ? "Espacios deportivos disponibles:"
@@ -198,8 +215,9 @@ public class ReserveSystem {
             System.out.println("- " + space.getName());
         }
     }
-
-    // Listar usuarios registrados
+    /**
+     * Muestra una lista con todos los usuarios registrados en el sistema
+     */
     public void listRegisteredUsers() {
         System.out.println(currentLanguage.getCode().equals("ES")
                 ? "Usuarios registrados:"

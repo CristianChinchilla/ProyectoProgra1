@@ -11,7 +11,10 @@ import java.time.LocalTime;
 import java.util.Scanner;
 
 public class Main {
-
+    /**
+     * Clase main la cual despliga un menu con las diferentes opciones del programa
+     * @param args 
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ReserveSystem reserveSystem = new ReserveSystem();
@@ -47,7 +50,7 @@ public class Main {
             }
 
             switch (option) {
-                case 1:
+                case 1 -> {
                     // Registrar un espacio deportivo
                     System.out.println(systemLanguage.getCode().equals("ES") ? "Ingrese el nombre del espacio deportivo: " : "Enter the name of the sports space: ");
                     String spaceName = scanner.nextLine();
@@ -60,17 +63,17 @@ public class Main {
                     SportsSpace newSpace = new SportsSpace(reserveSystem.generateSpaceId(), spaceName, spaceType, capacity);
                     reserveSystem.addSportsSpace(newSpace);
                     System.out.println(systemLanguage.getCode().equals("ES") ? "Espacio deportivo registrado con éxito." : "Sports space registered successfully.");
-                    break;
+                }
 
-                case 2:
+                case 2 -> {
                     // Listar espacios disponibles
                     System.out.println(systemLanguage.getCode().equals("ES")
                             ? "--- Espacios Disponibles ---"
                             : "--- Available Spaces ---");
                     reserveSystem.listSportsSpaces();
-                    break;
+                }
 
-                case 3:
+                case 3 -> {
                     // Realizar una reserva
                     System.out.println(systemLanguage.getCode().equals("ES") ? "Ingrese su nombre: " : "Enter your name: ");
                     String userName = scanner.nextLine();
@@ -107,9 +110,9 @@ public class Main {
                     } else {
                         System.out.println(systemLanguage.getCode().equals("ES") ? "No se pudo realizar la reserva. Conflicto de horario." : "Could not make the reservation. Schedule conflict.");
                     }
-                    break;
+                }
 
-                case 4:
+                case 4 -> {
                     // Cancelar una reserva
                     System.out.println(systemLanguage.getCode().equals("ES") ? "Ingrese el ID de la reserva a cancelar: " : "Enter the ID of the reservation to cancel: ");
                     int reservationId = scanner.nextInt();
@@ -119,23 +122,22 @@ public class Main {
                     } else {
                         System.out.println(systemLanguage.getCode().equals("ES") ? "Reserva no encontrada." : "Reservation not found.");
                     }
-                    break;
+                }
 
-                case 5:
+                case 5 -> {
                     // Ver historial de reservas
                     System.out.println(systemLanguage.getCode().equals("ES") ? "Historial de reservas:" : "Reservation history:");
                     reserveSystem.viewAllReservations();
-                    break;
+                }
 
-                case 6:
+                case 6 -> {
                     // Guardar y salir
                     reserveSystem.saveData();
                     System.out.println(systemLanguage.getCode().equals("ES") ? "Datos guardados. Saliendo del sistema..." : "Data saved. Exiting the system...");
                     running = false;
-                    break;
+                }
 
-                default:
-                    System.out.println(systemLanguage.getCode().equals("ES") ? "Opción inválida. Intente de nuevo." : "Invalid option. Please try again.");
+                default -> System.out.println(systemLanguage.getCode().equals("ES") ? "Opción inválida. Intente de nuevo." : "Invalid option. Please try again.");
             }
         }
 
